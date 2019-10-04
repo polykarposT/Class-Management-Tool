@@ -1,0 +1,23 @@
+{% extends "classesapp/base.html" %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h1>Do you want to delete {{ statistics.student.name }}'s statistics with the following details?</h1>
+        <hr>
+        <p class="h6 font-weight-light">Date: <span class="font-weight-bold">{{ statistics.date }}</span></p>
+        <p class="h6 font-weight-light">DICTATION SCORE: <span class="font-weight-bold">{{ statistics.dictation_score }}</span></p>
+        <p class="h6 font-weight-light">WRITING SCORE: <span class="font-weight-bold">{{ statistics.writing_score }}</span></p>
+        <p class="h6 font-weight-light">TEST SCORE: <span class="font-weight-bold">{{ statistics.test_score }}</span></p>
+        <p class="h6 font-weight-light">GRAMMAR SCORE: <span class="font-weight-bold">{{ statistics.grammar_score }}</span></p>
+        <p class="h6 font-weight-light">IN CLASS PERFORMANCE: <span class="font-weight-bold">{{ statistics.in_class_performance }}</span></p>
+        <hr>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger col-3" value="Delete">
+            <a class="btn btn-primary col-3" href="{% url 'classesapp:students_list' %}">Cancel</a>
+        </form>
+    {% else %}
+        <h1 style="text-align: center">Login required</h1>
+    {% endif %}
+{% endblock %}
+    

@@ -1,0 +1,45 @@
+{% extends 'classesapp/base.html' %}
+{% block title %}{{ class_detail.name|title }} class{% endblock %}
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h1>Welcome to <i>{{ class_detail.name|upper }}</i> class</h1>
+        <h2>Details:</h2>
+        <p class="h6 font-weight-light">Name: <i class="h5 font-weight-bold">{{ class_detail.name }}</i></p>
+        <p class="h6 font-weight-light">Day and Time of the Class: <i class="h5 font-weight-bold">{{ class_detail.day_and_time }}</i></p>
+        <p class="float-left">
+            <a class="btn btn-primary" href="{% url 'classesapp:classes_update' pk=class_detail.pk %}">Update</a>
+            <a class="btn btn-danger" href="{% url 'classesapp:classes_delete'  pk=class_detail.pk %}">Delete</a>
+        </p>
+        <a class="btn btn-primary float-right col-4" href="{% url 'classesapp:student_create' pk=class_detail.pk %}">Add Student</a>
+        <br>
+        <hr>
+        {% if class_detail.students.all %}
+            <h3>Students in this class {{ class_detail.students.all|length }}: </h3>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Student Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in class_detail.students.all %}            
+                    <tr>
+                        <th scope="row"><a href="{% url 'classesapp:student_detail' pk=student.pk %}">{{ student.id }}</a></td>
+                        <td>{{ student.name }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'classesapp:student_update' pk=student.pk %}"><i
+                                    class="fa fa-pencil"></i></a>
+                            <a class="btn btn-danger" href="{% url 'classesapp:student_delete' pk=student.pk %}"><i
+                                    class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+        {% else %}
+            <h2> There are no students in this class.</h2>   
+        {% endif %}
+    {% else %}
+        <h1 style="text-align: center">Login required</h1>
+    {% endif %}
+{% endblock %}

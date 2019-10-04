@@ -1,0 +1,26 @@
+{% extends "classesapp/base.html" %}
+{% block title %}
+    {% if not form.instance.pk %}
+     Create New Student
+    {% else %}
+    Update Student
+    {% endif %}
+{% endblock %}
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h1>
+            {% if not form.instance.pk %}
+                Create new Student
+            {% else %}
+                Update student
+            {% endif %}
+        </h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+    {% else %}
+        <h1 style="text-align: center">Login required</h1>
+    {% endif %}
+{% endblock %}

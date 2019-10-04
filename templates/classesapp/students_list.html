@@ -1,0 +1,38 @@
+{% extends 'classesapp/base.html' %}
+{% block title %} My Students {% endblock %}
+{% block body_block %}
+  {% if user.is_authenticated %}
+    {% if students %}
+    <h1>My Students</h1>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Student Name</th>
+          <th scope="col">Class</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+        <tr>
+          <th scope="row"><a href="{% url 'classesapp:student_detail' pk=student.pk %}">{{ student.id }}</a></td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.student_class }}</td>
+          <td>
+            <a class="btn btn-primary" href="{% url 'classesapp:student_update' pk=student.pk %}"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-danger" href="{% url 'classesapp:student_delete' pk=student.pk %}"><i class="fa fa-trash"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %} 
+    <h1>Sorry, no Students found :( </h1>
+    <p>Do you want to add a new Student?</p>
+    {% endif %}
+  {% else %}
+    <h1 style="text-align: center">Login required</h1>
+  {% endif %}
+{% endblock  %}
+    

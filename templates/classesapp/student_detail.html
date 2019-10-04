@@ -1,0 +1,56 @@
+{% extends 'classesapp/base.html' %}
+{% block title %}{{ student_detail.name|title }} information{% endblock %}
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h1>You are watching <i>{{ student_detail.name|title }}</i> information!</h1>
+        <h2>Details:</h2>
+        <p class="h6 font-weight-light">Name: <i class="h5 font-weight-bold">{{ student_detail.name }}</i></p>
+        <p class="h6 font-weight-light">Class: <i class="h5 font-weight-bold">{{ student_detail.student_class }}</i></p>
+        <p class="float-left">
+            <a class="btn btn-primary" href="{% url 'classesapp:student_update' pk=student_detail.pk %}">Update</a>
+            <a class="btn btn-danger" href="{% url 'classesapp:student_delete'  pk=student_detail.pk %}">Delete</a>
+        </p>
+        <a class="btn btn-primary float-right col-4" href="{% url 'classesapp:statistics_create' pk=student_detail.pk %}">Add new Student Statistics</a>
+        <br>
+        <hr>
+        {% if student_detail.statistics.all %}
+            <h3>{{ student_detail.name|title }}'s statistics:</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Dictation Score</th>
+                        <th scope="col">Writing Score</th>
+                        <th scope="col">Test Score</th>
+                        <th scope="col">Grammar Score</th>
+                        <th scope="col">Performance</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for statistics in student_detail.statistics.all %}
+                    <tr>
+                        <th scope="row"><a href="{% url 'classesapp:statistic_update' pk=statistics.pk %}">{{ statistics.id }}</a></td>
+                        <td>{{ statistics.date|date:"l d M Y" }}</td>
+                        <td>{{ statistics.dictation_score }} %</td>
+                        <td>{{ statistics.writing_score }} %</td>
+                        <td>{{ statistics.test_score }} %</td>
+                        <td>{{ statistics.grammar_score }} %</td>
+                        <td>{{ statistics.in_class_performance }} %</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'classesapp:statistic_update' pk=statistics.pk %}"><i
+                                    class="fa fa-pencil"></i></a>
+                            <a class="btn btn-danger" href="{% url 'classesapp:statistic_delete' pk=statistics.pk %}"><i
+                                    class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+        {% else %}
+            <h2> There are no statistics for this student.</h2>   
+        {% endif %}
+    {% else %}
+        <h1 style="text-align: center">Login required</h1>
+    {% endif %}
+{% endblock %}
+    

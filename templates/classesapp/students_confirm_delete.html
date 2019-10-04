@@ -1,0 +1,14 @@
+{% extends "classesapp/base.html" %}
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h1>Do you want to delete {{ students.name }}?</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Delete">
+            <a class="btn btn-primary" href="{% url 'classesapp:student_detail' pk=students.pk %}">Cancel</a>
+        </form>
+    {% else %}
+        <h1 style="text-align: center">Login required</h1>
+    {% endif %}
+{% endblock %}
+    

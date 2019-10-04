@@ -1,0 +1,43 @@
+{% extends 'classesapp/base.html' %}
+{% block title %} My Classes {% endblock %}
+{% block body_block %}
+  {% if user.is_authenticated %}
+    {% if classes %}
+    <h1 style="text-align: center">My Classes</h1>
+    <br>
+    <table class="table highlight">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Class Name</th>
+          <th scope="col">Day and Time</th>
+          <th scope="col">Number of Students</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for class in classes %}
+        <tr>
+          <th scope="row"><a href="{% url 'classesapp:class_detail' pk=class.pk %}">{{ class.id }}</a></td>
+          <td>{{ class.name }}</td>
+          <td>{{ class.day_and_time }}</td>
+          <td>{{ class.num_students }}</td>
+          <td>
+            <a class="btn btn-primary" href="{% url 'classesapp:classes_update' pk=class.pk %}"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-danger" href="{% url 'classesapp:classes_delete' pk=class.pk %}"><i class="fa fa-trash"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a class="btn btn-primary" href="{% url 'classesapp:classes_create' %}">Add New Class</a>
+    {% else%} 
+    <h1>Sorry, no Classes found :( </h1>
+    <p>Do you want to add new Class?</p>
+    <a class="btn btn-primary" href="{% url 'classesapp:classes_create' %}">Add New Class</a>
+    {% endif %}
+    {% else %}
+      <h1 style="text-align: center">Login required</h1>
+    {% endif %}
+{% endblock  %}
+    
