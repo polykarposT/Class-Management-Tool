@@ -4,6 +4,7 @@ Class Management Tool (CMT) is a web app for teachers and education professional
 You can download and try it with the following credentials:
  
  username: test
+ 
  password: test
 
 To create an account of your choice and use the web app with empty database reseting primary keys from start yo have to do the following steps:
