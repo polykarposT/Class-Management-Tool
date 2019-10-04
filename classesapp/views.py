@@ -38,6 +38,8 @@ def login_request(request):
     return render(request, "classesapp/login.html", {"form":form})
 
 
+class AboutView(TemplateView):
+    template_name = 'classesapp/about.html'
 
 class ClassesListView(ListView):
     queryset = models.Classes.objects.annotate(num_students=Count('students')).order_by('name')

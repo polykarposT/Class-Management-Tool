@@ -5,6 +5,7 @@ app_name = 'classesapp'
 
 urlpatterns = [
     path('', views.ClassesListView.as_view(), name="classes_list"),
+    path('about/', views.AboutView.as_view(), name="about"),
     path('class/<int:pk>/', views.ClassesDetailView.as_view(), name="class_detail"),
     path('new/', views.ClassesCreateView.as_view(), name="classes_create"),
     path('class/<int:pk>/update/', views.ClassesUpdateView.as_view(), name="classes_update"),
